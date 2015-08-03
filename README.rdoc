@@ -7,5 +7,5 @@ Passos para rodar localmente:
 * Subir o client na porta 3001 (`rails s -p3001`) e o server na 3000 (`rails s`)
 * Criar um novo usuário manualmente no server via rails console (ex: `u = User.create! email: 'cassiano@tagview.com.br', password: 12345678`) e as suas tasks (`t1 = u.tasks.create! title: 't1', due_date: 1.day.from_now; t2 = u.tasks.create! title: 't2', due_date: 2.days.from_now; t3 = u.tasks.create! title: 't3', due_date: 3.days.from_now`)
 * Visitar `http://localhost:3000/oauth/applications` e criar uma nova aplicação, colocando `http://localhost:3001/oauth/callback` como callback
-* Copiar os dados da app gerados pelo oauth2 provider (id e secret) para `app/controllers/resources_controller.rb` no client
+* Copiar os dados da app gerados pelo oauth2 provider (id e secret) para a constante `OAUTH2_PROVIDER` de `app/controllers/application_controller.rb` no client
 * Visitar `http://localhost:3001/tasks/show`
