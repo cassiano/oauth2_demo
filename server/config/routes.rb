@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'api/tasks' => 'tasks_api#index'
 
-  get 'api/show_user' => 'users_api#show'
+  get 'api/whoami' => 'users_api#show'
 
   use_doorkeeper
   devise_for :users

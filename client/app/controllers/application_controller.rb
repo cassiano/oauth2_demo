@@ -33,6 +33,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= OpenStruct.new(JSON.parse(access_token.get('api/show_user.json').body)) if logged_in?
+    @current_user ||= OpenStruct.new(JSON.parse(access_token.get('api/whoami.json').body)) if logged_in?
   end
 end

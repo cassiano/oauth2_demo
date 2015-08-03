@@ -1,4 +1,4 @@
-class ResourcesController < ApplicationController
+class TasksController < ApplicationController
   def show
     if logged_in?
       @tasks = JSON.parse(access_token.get('api/tasks.json').body).map do |task|

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'resources/show'
+  get 'tasks/show'
 
   get 'oauth/callback' => 'sessions#callback'
   get 'logout' => 'sessions#logout'
