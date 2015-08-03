@@ -1,4 +1,4 @@
-class User
+class Api::User
   include Virtus.model
 
   attribute :email, String
@@ -10,7 +10,7 @@ class User
     @tasks = nil if reload
 
     @tasks ||= JSON.parse(get('api/tasks.json').body).map do |task_attrs|
-      Task.new task_attrs.merge(user: self)
+      Api::Task.new task_attrs.merge(user: self)
     end
   end
 end
