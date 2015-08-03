@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  title: MyString
+  due_date: 2015-07-31 13:51:30
+
+two:
+  user: 
+  title: MyString
+  due_date: 2015-07-31 13:51:30

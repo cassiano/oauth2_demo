@@ -1,0 +1,10 @@
+- if logged_in?
+  %table
+    %tr
+      %th Título
+      %th Data limite
+
+    - @tasks.each do |task|
+      %tr
+        %td= task.title
+        %td= task.due_date.to_s(:long)
