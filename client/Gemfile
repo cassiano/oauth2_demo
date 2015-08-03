@@ -46,3 +46,4 @@ end
 
 gem 'oauth2'
 gem 'haml-rails'
+gem 'virtus'
