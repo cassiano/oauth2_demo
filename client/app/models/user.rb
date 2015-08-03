@@ -6,7 +6,9 @@ class User
 
   delegate :get, to: :access_token
 
-  def tasks
+  def tasks(reload = false)
+    @tasks = nil if reload
+
     @tasks ||= JSON.parse(get('api/tasks.json').body).map do |task_attrs|
       Task.new task_attrs.merge(user: self)
     end
