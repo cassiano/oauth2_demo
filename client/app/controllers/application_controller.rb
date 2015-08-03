@@ -10,9 +10,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :logged_in?, :current_user
-
-  before_action :generate_authorize_link, unless: :logged_in?, except: :callback
+  helper_method :logged_in?, :current_user, :authorize_link
 
   protected
 
@@ -20,8 +18,8 @@ class ApplicationController < ActionController::Base
     !!session[:oauth2_token]
   end
 
-  def generate_authorize_link
-    @authorize_link = oauth2_client.auth_code.authorize_url(redirect_uri: OAUTH2_PROVIDER[:callback], state: request.url)
+  def authorize_link
+    oauth2_client.auth_code.authorize_url(redirect_uri: OAUTH2_PROVIDER[:callback], state: request.url)
   end
 
   def oauth2_client
@@ -33,6 +31,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.new(JSON.parse(access_token.get('api/whoami.json').body)) if logged_in?
+    @current_user ||= User.new(JSON.parse(access_token.get('api/whoami.json').body), access_token) if logged_in?
   end
 end
