@@ -1,0 +1,11 @@
+== README
+
+Passos para rodar localmente:
+
+* `bundle install` em ambos os projetos
+* Criar o banco de dados e rodar as migrações do server (client não tem base de dados): `rake db:create db:migrate`
+* Subir o client na porta 3001 (`rails s -p3001`) e o server na 3000 (`rails s`)
+* Criar um novo usuário manualmente no server via rails console (ex: `u = User.create! email: 'cassiano@tagview.com.br', password: 12345678`)
+* Visitar `http://localhost:3000/oauth/applications` e criar uma nova aplicação, colocando `http://localhost:3001/oauth/callback` como callback
+* Copiar os dados da app gerados pelo oauth2 provider (id e secret) para `app/controllers/resources_controller.rb` no client
+* Visitar `http://localhost:3001/tasks/show`
