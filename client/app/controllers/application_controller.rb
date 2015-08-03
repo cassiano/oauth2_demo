@@ -31,6 +31,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= Api::User.new(JSON.parse(access_token.get('api/whoami.json').body).merge(access_token: access_token)) if logged_in?
+    if logged_in?
+      @current_user ||= Api::User.new(Api::Base.parse_json_response(access_token.get('api/whoami.json')).merge(access_token: access_token))
+    end
   end
 end
