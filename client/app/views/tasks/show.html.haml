@@ -3,10 +3,12 @@
     %tr
       %th Title
       %th Due Date
+      %th User
 
     - current_user.tasks.each do |task|
       %tr
         %td= task.title
         %td= task.due_date.to_s(:long)
+        %td= task.user.email
 - else
-  %h3 Please login to get your tasks!
+  %h3 Please log in to get your tasks!

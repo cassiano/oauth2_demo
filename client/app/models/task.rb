@@ -3,4 +3,5 @@ class Task
 
   attribute :title, String
   attribute :due_date, DateTime
+  attribute :user, User
 end
