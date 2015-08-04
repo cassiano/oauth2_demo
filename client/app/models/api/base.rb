@@ -3,13 +3,13 @@ class Api::Base
 
   attribute :access_token, OAuth2::AccessToken
 
-  delegate :get, to: :access_token, allow_nil: true
+  delegate :parse_json_response, to: :class
 
   def self.parse_json_response(response)
     JSON.parse response.body
   end
 
-  def load_uri(uri)
-    self.class.parse_json_response get(uri)
+  def load_resource(uri)
+    parse_json_response access_token.get(uri)
   end
 end

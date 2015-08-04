@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def logged_in?
-    !!session[:oauth2_token]
+    !!current_user
   end
 
   def authorize_url
@@ -27,12 +27,16 @@ class ApplicationController < ActionController::Base
   end
 
   def access_token
-    @access_token ||= OAuth2::AccessToken.new(oauth2_client, session[:oauth2_token]) if logged_in?
+    @access_token ||= OAuth2::AccessToken.new(oauth2_client, session[:oauth2_token]) if session[:oauth2_token]
   end
 
   def current_user
-    if logged_in?
-      @current_user ||= Api::User.new(Api::Base.parse_json_response(access_token.get('api/whoami.json')).merge(access_token: access_token))
+    if session[:oauth2_token]
+      begin
+        @current_user ||= Api::User.new(Api::Base.parse_json_response(access_token.get('api/whoami.json')).merge(access_token: access_token))
+      rescue OAuth2::Error
+        session[:oauth2_token] = nil
+      end
     end
   end
 end
