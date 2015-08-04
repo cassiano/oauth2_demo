@@ -6,7 +6,7 @@ class Api::Base
   delegate :parse_json_response, to: :class
 
   def self.parse_json_response(response)
-    JSON.parse response.body
+    JSON.parse response.body, symbolize_names: true
   end
 
   def load_resource(uri)

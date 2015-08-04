@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def decode_data(text)
-    JSON.parse(Base64.decode64(text))['data']
+    JSON.parse(Base64.decode64(text), symbolize_names: true)[:data]
   end
 
   def authorize_url
