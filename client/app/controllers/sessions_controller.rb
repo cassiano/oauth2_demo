@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     oauth2_token           = oauth2_client.auth_code.get_token(params[:code], redirect_uri: OAUTH2_PROVIDER[:callback])
     session[:oauth2_token] = oauth2_token.token
 
-    if params[:state]
+    if params[:state] && params[:state] =~ URI::ABS_URI
       redirect_to params[:state]
     else
       # Display the generated token, for debugging purposes only (could optionally redirect to a default page).
