@@ -1,7 +1,7 @@
 class Api::Base
   include Virtus.model
 
-  attribute :access_token, String
+  attribute :access_token, OAuth2::AccessToken
 
   delegate :get, to: :access_token, allow_nil: true
 
