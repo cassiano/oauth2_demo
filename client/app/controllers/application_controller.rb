@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :logged_in?, :current_user, :authorize_link
+  helper_method :logged_in?, :current_user, :authorize_url
 
   protected
 
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     !!session[:oauth2_token]
   end
 
-  def authorize_link
+  def authorize_url
     oauth2_client.auth_code.authorize_url(redirect_uri: OAUTH2_PROVIDER[:callback], state: request.url)
   end
 
