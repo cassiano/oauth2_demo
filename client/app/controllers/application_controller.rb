@@ -18,8 +18,19 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def encode_data(object)
+    Base64.encode64({ data: object }.to_json)
+  end
+
+  def decode_data(text)
+    JSON.parse(Base64.decode64(text))['data']
+  end
+
   def authorize_url
-    oauth2_client.auth_code.authorize_url(redirect_uri: OAUTH2_PROVIDER[:callback], state: request.url)
+    oauth2_client.auth_code.authorize_url(
+      redirect_uri: OAUTH2_PROVIDER[:callback],
+      state: encode_data({ return_to_uri: request.url })
+    )
   end
 
   def oauth2_client
