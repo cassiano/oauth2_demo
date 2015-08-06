@@ -39,33 +39,20 @@ class ApplicationController < ActionController::Base
 
   def access_token
     if session[:oauth2_token]
-      @access_token ||= begin
-        token_info = HashWithIndifferentAccess.new(session[:oauth2_token])
-
-        OAuth2::AccessToken.new(
-          oauth2_client,
-          token_info[:access_token],
-          refresh_token: token_info[:refresh_token],
-          expires_at: token_info[:expires_at]
-        )
-      end
+      @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, HashWithIndifferentAccess.new(session[:oauth2_token])
     end
   end
 
   def reset_token_info
-    @access_token = nil
+    @access_token = nil    # Reset the access token's memoization instance variable.
 
     session[:oauth2_token] = nil
   end
 
   def save_token_info(token)
-    @access_token = nil
+    @access_token = nil    # Reset the access token's memoization instance variable.
 
-    session[:oauth2_token] = {
-      access_token: token.token,
-      refresh_token: token.refresh_token,
-      expires_at: token.expires_at
-    }
+    session[:oauth2_token] = token.to_hash
   end
 
   def refresh_token
