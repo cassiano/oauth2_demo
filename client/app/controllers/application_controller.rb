@@ -38,13 +38,17 @@ class ApplicationController < ActionController::Base
   end
 
   def access_token
-    if session[:oauth2_token] && (token_info = HashWithIndifferentAccess.new(session[:oauth2_token]))
-      @access_token ||= OAuth2::AccessToken.new(
-        oauth2_client,
-        token_info[:access_token],
-        refresh_token: token_info[:refresh_token],
-        expires_at: token_info[:expires_at]
-      )
+    if session[:oauth2_token]
+      @access_token ||= begin
+        token_info = HashWithIndifferentAccess.new(session[:oauth2_token])
+
+        OAuth2::AccessToken.new(
+          oauth2_client,
+          token_info[:access_token],
+          refresh_token: token_info[:refresh_token],
+          expires_at: token_info[:expires_at]
+        )
+      end
     end
   end
 
@@ -72,9 +76,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if access_token
-      refresh_token if access_token.expired?
-
       begin
+        refresh_token if access_token.expired?
+
         @current_user ||= Api::User.new(access_token.get('api/whoami.json').parsed.merge(access_token: access_token))
       rescue OAuth2::Error
         reset_token_info
