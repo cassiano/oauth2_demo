@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   def save_token_in_session(token)
     session[:oauth2_token] = token && token.to_hash
 
-    access_token true   # Reload the @access_token instance (memoization) variable.
+    access_token true   # Forces the access token to be reloaded from the session data.
   end
 
   def reset_token_info
