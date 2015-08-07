@@ -26,11 +26,9 @@ class ApplicationController < ActionController::Base
     JSON.parse(Base64.decode64(text), symbolize_names: true)[:data]
   end
 
-  def authorize_url
-    oauth2_client.auth_code.authorize_url(
-      redirect_uri: OAUTH2_PROVIDER[:callback],
-      state: encode_data({ return_to: request.url })
-    )
+  def authorize_url(return_to_uri = request.url)
+    oauth2_client.auth_code.authorize_url redirect_uri: OAUTH2_PROVIDER[:callback],
+                                          state: encode_data(return_to: return_to_uri)
   end
 
   def oauth2_client
@@ -43,18 +41,18 @@ class ApplicationController < ActionController::Base
     @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, session[:oauth2_token].dup if session[:oauth2_token]
   end
 
-  def save_oauth2_token_in_session(token)
-    session[:oauth2_token] = token
+  def save_token_in_session(token)
+    session[:oauth2_token] = token && token.to_hash
 
-    access_token true   # Reload the access token based on the new/updated session[:oauth2_token] values.
+    access_token true   # Reload the @access_token instance (memoization) variable.
   end
 
   def reset_token_info
-    save_oauth2_token_in_session nil
+    save_token_in_session nil
   end
 
   def save_token_info(token)
-    save_oauth2_token_in_session token.to_hash
+    save_token_in_session token
   end
 
   def refresh_token
