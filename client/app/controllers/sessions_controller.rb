@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
       save_token_info token
 
-      if params[:state] && (return_to_uri = decode_data(params[:state])[:return_to_uri]) =~ URI::ABS_URI
+      if params[:state] && (return_to_uri = decode_data(params[:state])[:return_to]) =~ URI::ABS_URI
         redirect_to return_to_uri
       else
         # Display the generated token, for debugging purposes only (could optionally redirect to a default page).

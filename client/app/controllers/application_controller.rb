@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   OAUTH2_PROVIDER = {
     host: 'http://localhost:3000/',
-    app_id: '9502172b1dfa201ebcc37da95384bfca7cea71bcffa2a631be62c02996088657',
-    app_secret: 'd5f2cda7c6af32209b2d81c90a82b7a98206277713c213571a6e2df833dd88ae',
+    app_id: '8c1020d7adfaaf927a34ee7cc95b5bf76dc24462a41263b234eb8853c529aa6a',
+    app_secret: '67a25c354f05e2a9cfb435cca7c75f2bdad417a8bcc559875f987ed81b4f2f6c',
     callback: 'http://localhost:3001/oauth/callback'
   }
 
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def authorize_url
     oauth2_client.auth_code.authorize_url(
       redirect_uri: OAUTH2_PROVIDER[:callback],
-      state: encode_data({ return_to_uri: request.url })
+      state: encode_data({ return_to: request.url })
     )
   end
 
