@@ -6,5 +6,5 @@ Passos para rodar localmente:
 * Criar o banco de dados, rodar as migrações e o seed do server (client não tem base de dados): `rake db:create db:migrate db:seed`
 * O usuário padrão tem login `admin@tagview.com.br` e senha `12345678`
 * Subir o client na porta 3001 (`rails s -p3001`) e o server na 3000 (`rails s`)
-* Copiar os dados da app gerados pelo oauth2 provider (id e secret) em localhost:3000/oauth/application para o arquivo `config/secrets.yml` no client
+* Copiar os dados da app gerados pelo oauth2 provider (id e secret) em `http://localhost:3000/oauth/applications` para o arquivo `config/secrets.yml` no client
 * Visitar `http://localhost:3001/tasks/show`
