@@ -38,9 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def access_token
-    if session[:oauth2_token]
-      @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, HashWithIndifferentAccess.new(session[:oauth2_token])
-    end
+    @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, session[:oauth2_token].dup if session[:oauth2_token]
   end
 
   def reset_token_info
