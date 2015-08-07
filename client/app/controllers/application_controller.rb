@@ -1,11 +1,6 @@
-class ApplicationController < ActionController::Base
-  OAUTH2_PROVIDER = {
-    host: 'http://localhost:3000/',
-    app_id: '9502172b1dfa201ebcc37da95384bfca7cea71bcffa2a631be62c02996088657',
-    app_secret: 'd5f2cda7c6af32209b2d81c90a82b7a98206277713c213571a6e2df833dd88ae',
-    callback: 'http://localhost:3001/oauth/callback'
-  }
 
+class ApplicationController < ActionController::Base
+  OAUTH2_PROVIDER = Rails.application.secrets.oauth.deep_symbolize_keys
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
