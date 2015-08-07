@@ -37,20 +37,24 @@ class ApplicationController < ActionController::Base
     @oauth2_client ||= OAuth2::Client.new(OAUTH2_PROVIDER[:app_id], OAUTH2_PROVIDER[:app_secret], site: OAUTH2_PROVIDER[:host])
   end
 
-  def access_token
+  def access_token(reload = false)
+    @access_token = nil if reload
+
     @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, session[:oauth2_token].dup if session[:oauth2_token]
   end
 
-  def reset_token_info
-    @access_token = nil    # Reset the access token's memoization instance variable.
+  def save_oauth2_token_in_session(token)
+    session[:oauth2_token] = token
 
-    session[:oauth2_token] = nil
+    access_token true   # Reload the access token based on the new/updated session[:oauth2_token] values.
+  end
+
+  def reset_token_info
+    save_oauth2_token_in_session nil
   end
 
   def save_token_info(token)
-    @access_token = nil    # Reset the access token's memoization instance variable.
-
-    session[:oauth2_token] = token.to_hash
+    save_oauth2_token_in_session token.to_hash
   end
 
   def refresh_token
