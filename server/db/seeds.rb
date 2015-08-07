@@ -1,11 +1,13 @@
 # encoding: UTF-8
 
+# Default user
 if !User.any?
   puts "Creating default user..."
-  # Default user
+
   user = User.create!(email: 'admin@tagview.com.br', password: 12345678)
 
   puts "Generating user's tasks..."
+
   # Tasks
   [
     { title: "t1", due_date: 1.day.from_now },
@@ -21,6 +23,8 @@ end
 
 # Applications
 if !Doorkeeper::Application.any?
+  puts "Creating Doorkeeper Application..."
+
   Doorkeeper::Application.create!(
     uid: "client",
     name: "client",
