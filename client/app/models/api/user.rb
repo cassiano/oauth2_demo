@@ -2,7 +2,7 @@ class Api::User < Api::Base
   attribute :email, String
 
   def self.from_token(access_token)
-    new access_token.get('api/v1/users/whoami.json').parsed.merge(access_token: access_token)
+    new load_resource(access_token, 'api/v1/users/whoami.json').merge(access_token: access_token)
   end
 
   def tasks(reload = false)
