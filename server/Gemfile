@@ -48,3 +48,6 @@ end
 
 gem 'devise'
 gem 'doorkeeper'
+gem 'wine_bouncer'
+gem 'grape'
+gem 'grape-swagger'
