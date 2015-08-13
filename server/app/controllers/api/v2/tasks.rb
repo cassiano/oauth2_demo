@@ -1,13 +1,13 @@
 module API
-  module V1
+  module V2
     class Tasks < Grape::API
-      include API::V1::Defaults
+      include API::V2::Defaults
 
       resource :tasks do
         desc "Return current user's tasks"
         oauth2
         get do
-          resource_owner.tasks.order(:id)
+          resource_owner.tasks.order('id DESC')
         end
       end
     end

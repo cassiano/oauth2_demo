@@ -44,6 +44,7 @@ group :development, :test do
   gem 'binding_of_caller'
 end
 
-gem 'oauth2'
 gem 'haml-rails'
+gem 'oauth2'
 gem 'virtus'
+gem 'oauth2_api', '2.0', path: '/Users/cassiano/projects/rails/oauth2/oauth2_api'
