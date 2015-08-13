@@ -6,7 +6,7 @@ module API
 
       included do
         # common Grape settings
-        version 'v1'
+        version 'v1', using: :path
         format :json
 
         # global handler for simple not found case
