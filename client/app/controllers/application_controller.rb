@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   def access_token(reload = false)
     @access_token = nil if reload
 
-    @access_token ||= OAuth2::AccessToken.from_hash oauth2_client, session[:oauth2_token].dup if session[:oauth2_token]
+    @access_token ||= OAuth2::AccessToken.from_hash(oauth2_client, session[:oauth2_token].dup) if session[:oauth2_token]
   end
 
   def save_token_in_session(token)

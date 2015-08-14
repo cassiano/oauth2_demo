@@ -45,4 +45,5 @@ group :development, :test do
 end
 
 gem 'haml-rails'
+gem 'oauth2'
 gem 'oauth2_api', '2.0', path: '/Users/cassiano/projects/rails/oauth2/oauth2_api'
