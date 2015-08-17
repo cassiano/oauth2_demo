@@ -14,12 +14,12 @@ module API
         oauth2
         params do
           requires :title, type: String, desc: 'Task title'
-          optional :limit, type: Integer, desc: 'Record limit'
+          optional :limit, type: Integer, desc: 'Record limit', default: 100
         end
         get :search do
           wildcard_search = "%#{declared(params).title}%"
 
-          resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit || 100)
+          resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit)
         end
       end
     end
