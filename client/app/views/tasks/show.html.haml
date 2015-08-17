@@ -3,12 +3,14 @@
 
   %table
     %tr
+      %th ID
       %th Title
       %th Due Date
       %th User
 
     - current_user.tasks.each do |task|
       %tr
+        %td= task.id
         %td= task.title
         %td= task.due_date.to_s(:long)
         %td= task.user.email
@@ -17,12 +19,14 @@
 
   %table
     %tr
+      %th ID
       %th Title
       %th Due Date
       %th User
 
     - current_user.search_tasks('A', limit: 1).each do |task|
       %tr
+        %td= task.id
         %td= task.title
         %td= task.due_date.to_s(:long)
         %td= task.user.email

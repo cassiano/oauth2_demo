@@ -10,7 +10,7 @@
 
 <hr>
 <% if logged_in? %>
-  <%= current_user.email %> - <%= link_to 'Logout', logout_path %>
+  <%= current_user.email %> (ID: <%= current_user.id %>) - <%= link_to 'Logout', logout_path %>
 <% else %>
   User not logged in - <%= link_to 'Authorize!', authorize_url %>
 <% end %>
