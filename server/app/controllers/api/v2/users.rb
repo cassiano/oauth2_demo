@@ -7,6 +7,7 @@ module API
       include Roar::JSON
       include Roar::Hypermedia
 
+      property :id
       property :email
       collection :tasks, extend: API::V2::TaskRepresenter, class: Task
 

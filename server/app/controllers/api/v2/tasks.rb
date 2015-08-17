@@ -3,6 +3,7 @@ module API
     module TaskRepresenter
       include Roar::JSON
 
+      property :id
       property :title
       property :due_date
     end
