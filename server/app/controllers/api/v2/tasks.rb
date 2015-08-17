@@ -1,5 +1,12 @@
 module API
   module V2
+    module TaskRepresenter
+      include Roar::JSON
+
+      property :title
+      property :due_date
+    end
+
     class Tasks < Grape::API
       include API::V2::Defaults
 

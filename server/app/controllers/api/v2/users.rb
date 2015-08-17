@@ -1,4 +1,5 @@
 require 'roar/json'
+require File.expand_path('../tasks', __FILE__)
 
 module API
   module V2
@@ -7,6 +8,7 @@ module API
       include Roar::Hypermedia
 
       property :email
+      collection :tasks, extend: API::V2::TaskRepresenter, class: Task
 
       link :tasks do
         'api/v2/tasks.json'
