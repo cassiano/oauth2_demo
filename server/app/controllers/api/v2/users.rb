@@ -1,15 +1,14 @@
 require 'roar/json'
-require File.expand_path('../tasks', __FILE__)
+require 'roar/decorator'
 
 module API
   module V2
-    module UserRepresenter
+    class UserRepresenter < Roar::Decorator
       include Roar::JSON
       include Roar::Hypermedia
 
       property :id
       property :email
-      collection :tasks, extend: API::V2::TaskRepresenter, class: Task
 
       link :tasks do
         'api/v2/tasks.json'
@@ -27,9 +26,10 @@ module API
         desc 'Return current user'
         oauth2
         get :whoami do
-          resource_owner.extend(UserRepresenter).tap do |user|
-            user.email.reverse!
-          end
+          current_user = resource_owner
+          current_user.email.reverse!
+
+          UserRepresenter.new current_user
         end
       end
     end

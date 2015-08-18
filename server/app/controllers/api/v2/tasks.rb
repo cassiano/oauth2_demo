@@ -1,6 +1,9 @@
+require 'roar/json'
+require 'roar/decorator'
+
 module API
   module V2
-    module TaskRepresenter
+    class TaskRepresenter < Roar::Decorator
       include Roar::JSON
 
       property :id
@@ -15,7 +18,9 @@ module API
         desc "Return current user's tasks"
         oauth2
         get do
-          resource_owner.tasks.order('id DESC')
+          resource_owner.tasks.order('id DESC').map do |task|
+            TaskRepresenter.new task
+          end
         end
 
         desc "Search the current user'd tasks by title"
@@ -27,7 +32,9 @@ module API
         get :search do
           wildcard_search = "%#{declared(params).title}%"
 
-          resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit)
+          resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit).map do |task|
+            TaskRepresenter.new task
+          end
         end
       end
     end
