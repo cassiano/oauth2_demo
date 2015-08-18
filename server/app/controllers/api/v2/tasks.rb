@@ -9,6 +9,12 @@ module API
       property :id
       property :title
       property :due_date
+
+      def self.wrap_collection(collection)
+        collection.map do |item|
+          new item
+        end
+      end
     end
 
     class Tasks < Grape::API
@@ -18,9 +24,7 @@ module API
         desc "Return current user's tasks"
         oauth2
         get do
-          resource_owner.tasks.order('id DESC').map do |task|
-            TaskRepresenter.new task
-          end
+          TaskRepresenter.wrap_collection resource_owner.tasks.order('id DESC')
         end
 
         desc "Search the current user'd tasks by title"
@@ -32,9 +36,7 @@ module API
         get :search do
           wildcard_search = "%#{declared(params).title}%"
 
-          resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit).map do |task|
-            TaskRepresenter.new task
-          end
+          TaskRepresenter.wrap_collection resource_owner.tasks.where('title LIKE ?', wildcard_search).limit(declared(params).limit)
         end
       end
     end
