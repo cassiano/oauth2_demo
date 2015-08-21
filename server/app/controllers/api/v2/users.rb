@@ -14,7 +14,7 @@ module API
         'api/v2/tasks.json'
       end
 
-      link :search do
+      link :search_tasks do
         'api/v2/tasks/search.json'
       end
     end
