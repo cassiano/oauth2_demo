@@ -8,7 +8,7 @@
       %th Due Date
       %th User
 
-    - current_user.tasks.each do |task|
+    - current_user.tasks({}, Api::Task, user: current_user).each do |task|
       %tr
         %td= task.id
         %td= task.title
@@ -24,7 +24,7 @@
       %th Due Date
       %th User
 
-    - current_user.search_tasks('A', limit: 1).each do |task|
+    - current_user.search_tasks({ title: 'A', limit: 1 }, Api::Task, user: current_user).each do |task|
       %tr
         %td= task.id
         %td= task.title
